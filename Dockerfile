@@ -1,18 +1,13 @@
-FROM ubuntu:latest
+FROM ubuntu
 
-#install all the tools you might want to use in your container
-RUN apt-get update
-RUN apt-get install curl -y
-RUN apt-get install vim -y
-#the following ARG turns off the questions normally asked for location and timezone for Apache
+RUN apt update
+
 ARG DEBIAN_FRONTEND=noninteractive
-RUN apt-get install apache2 -y
+RUN apt install apache2 -y && apt-get clean
 
-#change working directory to root of apache webhost
-WORKDIR var/www/html
+ENV APACHE_RUN_USER www-data
+ENV APACHE_RUN_GROUP www-data
+ENV APACHE_LOG_DIR /var/log/apache2
 
-#copy your files, if you want to copy all use COPY . .
-COPY index.html index.html
-
-#now start the server
-CMD ["apachectl", "-D", "FOREGROUND"]
+EXPOSE 80
+CMD ["apachectl", "-D",  "FOREGROUND"]
