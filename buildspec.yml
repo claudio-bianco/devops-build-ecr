@@ -14,7 +14,7 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...      
-      - docker build -t devops-build-ecr .      
+      - docker build -t devops-build-ecr:latest .      
       - docker tag devops-build-ecr:latest 353719963446.dkr.ecr.us-west-2.amazonaws.com/devops-build-ecr:latest
   post_build:
     commands:
