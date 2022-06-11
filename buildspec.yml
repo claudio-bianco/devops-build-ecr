@@ -20,8 +20,8 @@ phases:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker images...      
-      - docker push \353719963446.dkr.ecr.us-west-2.amazonaws.com/devops-build-ecr:latest
-      - docker push \353719963446.dkr.ecr.us-west-2.amazonaws.com/devops-build-ecr:$IMAGE_TAG
+      - docker push 353719963446.dkr.ecr.us-west-2.amazonaws.com/devops-build-ecr:latest
+      - docker push 353719963446.dkr.ecr.us-west-2.amazonaws.com/devops-build-ecr:$IMAGE_TAG
       - echo Writing image definitions file...      
       - printf '[{"name”:"$ECS_CONTAINER_NAME","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
       - cat imagedefinitions.json 
