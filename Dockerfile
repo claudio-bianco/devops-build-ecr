@@ -1,13 +1,12 @@
-FROM ubuntu
-
-RUN apt update
-
-ARG DEBIAN_FRONTEND=noninteractive
-RUN apt install apache2 -y && apt-get clean
-
-ENV APACHE_RUN_USER www-data
-ENV APACHE_RUN_GROUP www-data
-ENV APACHE_LOG_DIR /var/log/apache2
-
+FROM centos:latest
+LABEL maintainer "claudio"
+RUN cd /etc/yum.repos.d/
+RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+RUN sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+RUN yum -y install java
+RUN yum -y install httpd
+RUN yum -y install php
+CMD /usr/sbin/httpd -D FOREGROUND
+WORKDIR /var/www/html
+COPY index.html /var/www/html
 EXPOSE 80
-CMD ["apachectl", "-D",  "FOREGROUND"]
